@@ -1,19 +1,19 @@
-Extension { #name : #SaMethodNode }
+Extension { #name : 'SaMethodNode' }
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaMethodNode >> inspectionForSource: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'Source in current image'>
 
 	^ self
 		  compiledMethodInCurrentImageIfPresent: [ :method | 
-			  method inspectionSource ]
+			  method inspectionSource: aBuilder ]
 		  ifAbsent: [ 
 			  aBuilder newLabel
 				  label: '-- Not found --';
 				  yourself ]
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaMethodNode >> inspectionForTallyNodes: aBuilder [
 	<inspectorPresentationOrder: 1 title: 'Tally Nodes'>
 
@@ -45,7 +45,7 @@ SaMethodNode >> inspectionForTallyNodes: aBuilder [
 		yourself
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaMethodNode >> nameTags [
 
 	^ { self categoryName }

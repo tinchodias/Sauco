@@ -2,12 +2,13 @@
 I just hold some utility methods (sorry!)
 "
 Class {
-	#name : #SaConvenience,
-	#superclass : #Object,
-	#category : #'SaucoPerfMeter-Spec2'
+	#name : 'SaConvenience',
+	#superclass : 'Object',
+	#category : 'SaucoPerfMeter-Spec2',
+	#package : 'SaucoPerfMeter-Spec2'
 }
 
-{ #category : #ui }
+{ #category : 'ui' }
 SaConvenience class >> codeIcon: aSaCodeNode [
 
 	^ (FormCanvas extent: 16 @ 16)
@@ -18,7 +19,7 @@ SaConvenience class >> codeIcon: aSaCodeNode [
 		form
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 SaConvenience class >> codeNameMorphFor: aSaCodeNode [
 	^ EpMorphFactory default rowWithAll: {
 			(self codeIcon: aSaCodeNode) asMorph.
@@ -28,7 +29,7 @@ SaConvenience class >> codeNameMorphFor: aSaCodeNode [
 				ifFalse: [ self shadowedTextFor: aSaCodeNode fullName ])" }
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 SaConvenience class >> inspectionCodeList: aBuilder items: itemsCollection [
 
 	^ aBuilder newTable
@@ -56,7 +57,7 @@ SaConvenience class >> inspectionCodeList: aBuilder items: itemsCollection [
 			evaluated: [ :each | ' ' join: each nameTags ])
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SaConvenience class >> multipleLineDescriptionFor: node [ 
 
 	^ '{1}
@@ -68,19 +69,19 @@ Category: 	{3}' format: {
 		}
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SaConvenience class >> printRatio: aNumber [
 
 	^ (((100.0 * aNumber) roundTo: 0.01) printShowingDecimalPlaces: 2), '%'
 ]
 
-{ #category : #ratio }
+{ #category : 'ratio' }
 SaConvenience class >> ratioBottomColor [
 
 	^ Smalltalk ui theme baseColor
 ]
 
-{ #category : #ratio }
+{ #category : 'ratio' }
 SaConvenience class >> ratioIcon: ratio [
 
 	| width height |
@@ -97,18 +98,18 @@ SaConvenience class >> ratioIcon: ratio [
 
 ]
 
-{ #category : #ratio }
+{ #category : 'ratio' }
 SaConvenience class >> ratioTopColor [
 
 	^ 	Smalltalk ui theme textColor
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 SaConvenience class >> shadowedTextFor: aString [
 	^ EpMorphFactory default stringFor: aString color: EpMorphFactory default softerTextColor
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 SaConvenience class >> tallyNodeMorphFor: aSaTallyNode [
 
 	| contents |

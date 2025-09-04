@@ -1,6 +1,6 @@
-Extension { #name : #SaCategoryNode }
+Extension { #name : 'SaCategoryNode' }
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaCategoryNode >> inspectionForBehaviors: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'Behaviors'>
 
@@ -9,7 +9,7 @@ SaCategoryNode >> inspectionForBehaviors: aBuilder [
 		items: self behaviorNodes
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaCategoryNode >> nameTags [
 
 	^ #(  )

@@ -1,1 +1,1 @@
-Package { #name : #'SaucoPerfMeter-Spec2' }
+Package { #name : 'SaucoPerfMeter-Spec2' }

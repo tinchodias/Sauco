@@ -1,6 +1,6 @@
-Extension { #name : #SaCategoryPrefixColorMap }
+Extension { #name : 'SaCategoryPrefixColorMap' }
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaCategoryPrefixColorMap >> inspectionForColorAssociations: aBuilder [
 	<inspectorPresentationOrder: 1 title: 'Colors'>
 

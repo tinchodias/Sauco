@@ -1,6 +1,6 @@
-Extension { #name : #SaReport }
+Extension { #name : 'SaReport' }
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaReport >> inspectionForBehaviors: aBuilder [
 	<inspectorPresentationOrder: 2 title: 'Behaviors'>
 
@@ -9,7 +9,7 @@ SaReport >> inspectionForBehaviors: aBuilder [
 		items: self allBehaviorNodes
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaReport >> inspectionForCategories: aBuilder [
 	<inspectorPresentationOrder: 1 title: 'Categories'>
 
@@ -18,7 +18,7 @@ SaReport >> inspectionForCategories: aBuilder [
 		items: self allCategoryNodes
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaReport >> inspectionForMethodLeaves: aBuilder [
 	<inspectorPresentationOrder: 0.6 title: 'Method Leaves'>
 
@@ -42,7 +42,7 @@ SaReport >> inspectionForMethodLeaves: aBuilder [
 			evaluated: [ :each | ' ' join: each nameTags ])
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaReport >> inspectionForMethods: aBuilder [
 	<inspectorPresentationOrder: 3 title: 'Methods'>
 
@@ -51,7 +51,7 @@ SaReport >> inspectionForMethods: aBuilder [
 		items: self allMethodNodes
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaReport >> inspectionForNetRanking: aBuilder [
 	<inspectorPresentationOrder: 0.7 title: 'Tally Leaves'>
 
@@ -85,7 +85,7 @@ SaReport >> inspectionForNetRanking: aBuilder [
 		yourself
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaReport >> inspectionForTallyTree: aBuilder [
 	<inspectorPresentationOrder: 0.1 title: 'Tally tree'>
 

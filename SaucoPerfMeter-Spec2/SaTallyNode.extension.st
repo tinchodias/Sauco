@@ -1,6 +1,6 @@
-Extension { #name : #SaTallyNode }
+Extension { #name : 'SaTallyNode' }
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaTallyNode >> inspectionForAllParents: aBuilder [
 	<inspectorPresentationOrder: 0.2 title: 'Call Stack'>
 
@@ -22,7 +22,7 @@ SaTallyNode >> inspectionForAllParents: aBuilder [
 		yourself
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaTallyNode >> inspectionForBehaviors: aBuilder [
 	<inspectorPresentationOrder: 2 title: 'Behaviors'>
 
@@ -31,7 +31,7 @@ SaTallyNode >> inspectionForBehaviors: aBuilder [
 		items: self allBehaviorNodes
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaTallyNode >> inspectionForCategories: aBuilder [
 	<inspectorPresentationOrder: 1 title: 'Categories'>
 
@@ -40,7 +40,7 @@ SaTallyNode >> inspectionForCategories: aBuilder [
 		items: self allCategoryNodes
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaTallyNode >> inspectionForMethods: aBuilder [
 	<inspectorPresentationOrder: 3 title: 'Methods'>
 
@@ -49,14 +49,14 @@ SaTallyNode >> inspectionForMethods: aBuilder [
 		items: self allMethodNodes
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaTallyNode >> inspectionForSource: aBuilder [
 	<inspectorPresentationOrder: 0.1 title: 'Source in current image'>
 
 	^ methodNode inspectionForSource: aBuilder
 ]
 
-{ #category : #'*SaucoPerfMeter-Spec2' }
+{ #category : '*SaucoPerfMeter-Spec2' }
 SaTallyNode >> relevanceDescription [
 
 	^ String streamContents: [ :stream |
