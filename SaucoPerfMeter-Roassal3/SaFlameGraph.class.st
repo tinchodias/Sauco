@@ -4,89 +4,119 @@ Class {
 	#instVars : [
 		'tallyNodeSelectBlock',
 		'tallyNodes',
-		'borderForBox'
+		'flameBoxes',
+		'flameLabels',
+		'flameBoxPadding',
+		'ellipsis',
+		'flameLabelKey',
+		'logicalFontSize',
+		'minimalLabelWidth',
+		'shrinkPace',
+		'minimalScaleToShowText'
 	],
 	#category : 'SaucoPerfMeter-Roassal3',
 	#package : 'SaucoPerfMeter-Roassal3'
 }
 
-{ #category : 'private' }
-SaFlameGraph >> addInnerLabels [
-	"Add labels to each rectangle, when they fit inside."	
-
-	builder shapes do: [ :shape |
-		| location labelBuilder label |
-		location := RSLocation new middle; inner; left; offset: 5@0; yourself.
-		
-		labelBuilder := RSMultilineLabelBuilder new
-			wrapStrategy: (RSWrapEllipsisStrategy new wrapMaxWidth: shape width - 10);
-			yourself.
-		
-		labelBuilder labelShape color: (report colorMap labelColorAt: shape model).
-		
-		label := labelBuilder shapeFor: shape model methodNode fullName.
-
-		location stick: label on: shape.
-
-		(label width > 25 and: [ (label width+5) < shape width ]) ifTrue: [ 
-			builder canvas addShape: label ] ].
-
-]
-
-{ #category : 'private' }
-SaFlameGraph >> borderForBox [
-
-	^ borderForBox ifNil: [
-		borderForBox := RSBorder new
-		  width: 0.25;
-		  color: self theme textColor;
-		  yourself ]
-
-]
-
 { #category : 'building' }
 SaFlameGraph >> build [
 
-	builder := RSFlameGraph new.
+	self prepareToBuild.
+	
 	builder
-		gap: 0 @ 2;
-		"Workaround to be more accurate: 
-			when gap's x is non-zero, the children narrow on each level."
-		graphWidth: 2000;
-		modelWeight: [ :tallyNode | tallyNode tally ].
-
-	builder boxShape
-		cornerRadius: 1;
-		border: self borderForBox;
-		addInteraction: self popupInteraction;
-		addInteraction: self highlightInteraction;
-		when: RSMouseDoubleClick
-			do: [ :e | e shape model inspect ]
-			for: self.
-
-	builder
-		from: (self nodesToShow: tallyNodes)
-			using: [ :n | self nodesToShow: n children ];
+		from: (self selectTallyNodesFrom: tallyNodes)
+			using: [ :eachNode |
+				self selectTallyNodesFrom: eachNode children ];
 		build.
-
-	builder shapes do: [ :shape |
-		shape color: shape model methodNode codeColor ].
-
-	self addInnerLabels.
 
 	builder canvas
 		color: self theme backgroundColor;
-		addInteraction: RSCanvasController new
+		addInteraction: RSCanvasController new;
+		when: RSScaleChangedEvent
+			send: #onCanvasScaled:
+			to: self.
+
+	"Additional setup for the box shapes"
+	flameBoxes := builder shapes.
+	flameBoxes do: [ :eachFlameBox |
+		eachFlameBox
+			color: eachFlameBox model methodNode codeColor;
+			addInteraction: RSKeepBorderWidthRatioInteraction ].
+
+	"Prepare the labels, that will be added depending on the camera scale"
+	flameBoxes do: [ :eachFlameBox |
+		| label |
+		label := RSLabel new.
+		label position: eachFlameBox position.
+		eachFlameBox propertyAt: flameLabelKey put: label ]
 ]
 
 { #category : 'accessing' }
 SaFlameGraph >> considerAllNodes [
 
-	self tallyNodeSelectBlock: [ :_ | true ]
+	tallyNodeSelectBlock := [ :_ | true ]
+]
+
+{ #category : 'accessing' }
+SaFlameGraph >> considerOnlyRelevantNodes [
+
+	tallyNodeSelectBlock := #isRelevant
+]
+
+{ #category : 'initialization' }
+SaFlameGraph >> initialize [
+
+	super initialize.
+	
+	ellipsis := '...'.
+	shrinkPace := 3.
+
+	flameLabelKey := #FlameLabel.
+
+	flameBoxPadding := 4 @ 10.
+	minimalLabelWidth := 10.
+
+	minimalScaleToShowText := 0.7.
+	logicalFontSize := 10.
+
+	self considerOnlyRelevantNodes
 ]
 
 { #category : 'private' }
-SaFlameGraph >> nodesToShow: someNodes [
+SaFlameGraph >> onCanvasScaled: anEvent [
+
+	self updateLabels.
+
+	anEvent signalUpdate
+]
+
+{ #category : 'private' }
+SaFlameGraph >> prepareToBuild [
+
+	builder := RSFlameGraph new.
+	builder
+		modelWeight: [ :tallyNode | tallyNode tally ];
+		graphWidth: 1000;
+		boxHeight: logicalFontSize + (flameBoxPadding y * 2);
+		"Workaround: when gap's x is non-zero, the children narrow on each level."
+		gap: 0 @ 0.
+
+	builder boxShape
+		cornerRadius: 0;
+		border:
+			(RSBorder new
+			  width: 0.5;
+			  color: self theme textColor;
+			  yourself);
+		addInteraction: self popupInteraction;
+		addInteraction: self highlightInteraction;
+		when: RSMouseDoubleClick
+			do: [ :each | each shape model inspect ]
+			for: builder
+]
+
+{ #category : 'private' }
+SaFlameGraph >> selectTallyNodesFrom: someNodes [
 	"Answer a filtered and sorted list of SPMTallyNodes.
 	They are sorted by #fullName to help comparing visually one profile run with another."
 
@@ -95,10 +125,25 @@ SaFlameGraph >> nodesToShow: someNodes [
 
 ]
 
+{ #category : 'private' }
+SaFlameGraph >> setText: aString widthLimit: aNumber onLabel: label [
+		
+	| shrinkedString |
+	"The complete original string may already fit"
+	label text: aString.
+
+	"Shrink the string until it fits"
+	shrinkedString := aString.
+	[ label width > aNumber and: [ shrinkedString size > shrinkPace ] ]
+		whileTrue: [
+			shrinkedString := shrinkedString allButLast: shrinkPace.
+			label text: shrinkedString, ellipsis ]
+]
+
 { #category : 'accessing' }
 SaFlameGraph >> tallyNodeSelectBlock [
 
-	^ tallyNodeSelectBlock ifNil: [ tallyNodeSelectBlock := #isRelevant ]
+	^ tallyNodeSelectBlock
 ]
 
 { #category : 'accessing' }
@@ -117,4 +162,54 @@ SaFlameGraph >> tallyNodes [
 SaFlameGraph >> tallyNodes: aCollectionOfSaTallyNodes [
 
 	tallyNodes := aCollectionOfSaTallyNodes
+]
+
+{ #category : 'private' }
+SaFlameGraph >> updateLabelOf: aFlameBox scaledFontSize: scaledFontSize [
+
+	| label maxLabelWidth |
+	label := aFlameBox propertyAt: flameLabelKey.
+	label
+		color: (report colorMap labelColorAt: aFlameBox model);
+		fontSize: scaledFontSize.
+	
+	maxLabelWidth := aFlameBox width - (flameBoxPadding x * 2).
+	self
+		setText: aFlameBox model methodNode fullName
+		widthLimit: maxLabelWidth
+		onLabel: label.
+
+	"position: aFlameBox position --> to center".
+	RSLocation new
+		inner; middle; left;
+		offset: flameBoxPadding x @ 0;
+		stick: label on: aFlameBox.
+
+	"Ensure it is added to the canvas"
+	label isInACanvas ifFalse: [
+		builder canvas addShape: label ]
+]
+
+{ #category : 'private' }
+SaFlameGraph >> updateLabels [
+
+	| scale |
+	scale := self canvas camera scale.
+
+	scale >= minimalScaleToShowText
+		ifTrue: [
+			| scaledFontSize |
+			scaledFontSize := (logicalFontSize / scale) ceiling.
+
+			"Set label's fontSize and shrinked text
+			(label may need to be added to canvas, too)"
+			flameBoxes do: [ :each |
+				self
+					updateLabelOf: each
+					scaledFontSize: scaledFontSize ] ]
+		ifFalse: [
+			"Just remove all labels"
+			flameBoxes do: [ :each |
+				(each propertyAt: flameLabelKey) remove ] ]
+
 ]
