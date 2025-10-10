@@ -8,12 +8,13 @@ My algorithm to write has this criteria:
 
 "
 Class {
-	#name : #SaAdaptedDurationPrinter,
-	#superclass : #SaDurationPrinter,
-	#category : #'SaucoPerfMeter-Core'
+	#name : 'SaAdaptedDurationPrinter',
+	#superclass : 'SaDurationPrinter',
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 SaAdaptedDurationPrinter >> print: aDuration on: stream [
 	"Write a short human readable representation by:
 		* truncating less significant part

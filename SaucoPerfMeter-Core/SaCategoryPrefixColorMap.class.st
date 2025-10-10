@@ -1,26 +1,27 @@
 Class {
-	#name : #SaCategoryPrefixColorMap,
-	#superclass : #SaColorMap,
+	#name : 'SaCategoryPrefixColorMap',
+	#superclass : 'SaColorMap',
 	#instVars : [
 		'colorAssociations',
 		'defaultColor'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryPrefixColorMap >> colorAssociations [
 
 	^ colorAssociations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryPrefixColorMap >> colorAt: aSaCodeNode [
 
 	^ self colorForCategory: aSaCodeNode categoryName 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryPrefixColorMap >> colorForCategory: aString [ 
 
 	^ (self colorAssociations
@@ -29,7 +30,7 @@ SaCategoryPrefixColorMap >> colorForCategory: aString [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaCategoryPrefixColorMap >> initialize [
 
 	super initialize.
@@ -39,7 +40,7 @@ SaCategoryPrefixColorMap >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryPrefixColorMap >> labelColorAt: aSaCodeNode [
 
 	^ (self colorAt: aSaCodeNode) luminance < 0.5
@@ -47,7 +48,7 @@ SaCategoryPrefixColorMap >> labelColorAt: aSaCodeNode [
 		  ifFalse: [ Color black ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaCategoryPrefixColorMap >> mapPrefixes: aCollectionOfStrings from: aColor [
 
 	| anotherColor minHueIncrement |
@@ -60,7 +61,7 @@ SaCategoryPrefixColorMap >> mapPrefixes: aCollectionOfStrings from: aColor [
 	self mapPrefixes: aCollectionOfStrings from: aColor to: anotherColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaCategoryPrefixColorMap >> mapPrefixes: aCollectionOfStrings from: aColor to: anotherColor [
 
 	| colorRamp |

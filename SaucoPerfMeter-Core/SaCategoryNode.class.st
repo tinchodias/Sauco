@@ -2,46 +2,47 @@
 I represent a category in the SaReport.
 "
 Class {
-	#name : #SaCategoryNode,
-	#superclass : #SaCodeNode,
+	#name : 'SaCategoryNode',
+	#superclass : 'SaCodeNode',
 	#instVars : [
 		'behaviorNodes'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryNode >> addBehavior: aBehaviorNode [
 	behaviorNodes add: aBehaviorNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryNode >> behaviorNodes [
 	^ behaviorNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryNode >> behaviorNodes: anObject [
 	behaviorNodes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryNode >> categoryName [
 	
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryNode >> children [
 	^ behaviorNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCategoryNode >> fullName [
 	^ name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaCategoryNode >> initialize [
 	super initialize.
 	behaviorNodes := OrderedCollection new
