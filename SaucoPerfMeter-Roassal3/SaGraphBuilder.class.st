@@ -41,10 +41,16 @@ SaGraphBuilder >> popupInteraction [
 	popup shapeBuilder textBlock: [ :n | 
 		SaConvenience multipleLineDescriptionFor: n ].
 
-	popup shapeBuilder labelBuilder labelShape color: Color black.
-	self flag: #todo. 
-		"Popup doesn't allow custom background so owe cant use here 'self theme textColor'
-		See: https://github.com/ObjectProfile/Roassal3/issues/423".
+	popup shapeBuilder labelBuilder labelShape
+		color: self theme textColor.
+
+	popup shapeBuilder boxBuilder
+		color: self theme backgroundColor;
+		border:
+			(RSBorder new
+				color: self theme borderColor;
+				width: 0.5;
+				yourself).
 
 	^ popup
 ]
