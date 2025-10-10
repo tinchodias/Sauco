@@ -11,8 +11,8 @@ My collaborators are:
 
 "
 Class {
-	#name : #SaTallyNode,
-	#superclass : #Object,
+	#name : 'SaTallyNode',
+	#superclass : 'Object',
 	#instVars : [
 		'methodNode',
 		'tally',
@@ -20,10 +20,11 @@ Class {
 		'report',
 		'parent'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SaTallyNode class >> report: aSaReport methodNode: aSaMethodNode tally: anInteger children: aSaTallyNode [
 	^ self new
 		report: aSaReport;
@@ -33,38 +34,38 @@ SaTallyNode class >> report: aSaReport methodNode: aSaMethodNode tally: anIntege
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> allBehaviorNodes [
 	^ self allMethodNodes collect: [ :each | each behaviorNode ] as: Set
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> allCategoryNodes [
 	^ self allBehaviorNodes collect: [ :each | each categoryNode ] as: Set
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> allLeaves [
 	^ children ifEmpty: [ {self} ] ifNotEmpty: [ children flatCollect: #allLeaves ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> allMethodNodes [
 	^ self withAllChildren collect: [ :each | each methodNode ] as: Set
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> categoryName [
 
 	^ methodNode categoryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> children [
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> children: aCollectionOfTallyNodes [
 	"Set the children nodes. We let parents the responsability of keeping the bi-directional relationshipup-to-date (see #parent:)."
 
@@ -78,82 +79,82 @@ SaTallyNode >> children: aCollectionOfTallyNodes [
 		each parent: self ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> fullName [
 
 	^ self methodNode fullName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SaTallyNode >> hasChildren [
 
 	^ self children notEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SaTallyNode >> hasParent [
 
 	^ parent isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SaTallyNode >> isRelevant [
 
 	^ self ratio >= report minimumRelevantRatio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> methodNode [
 	^ methodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> methodNode: aSaMethodNode [
 
 	methodNode := aSaMethodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> netPercentage [
 	^ 100.0 * self netRatio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> netRatio [
 	^ self netTally asFloat / self report totalTally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> netTally [
 	^ tally - (children sum: #tally)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> netTime [
 	"Answer the net time (respect to children time)."
 
 	^ self report totalTime * self netRatio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> parent [
 
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> parent: anotherTallyNodeOrNil [
 	"Set the parent. We let parents the responsability of keeping the bi-directional relationship up-to-date (see #children:)."
 	
 	parent := anotherTallyNodeOrNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> parentRatio [
 	^ tally asFloat / self parent tally
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SaTallyNode >> printOn: aStream [
 
 	super printOn: aStream.
@@ -167,42 +168,42 @@ SaTallyNode >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> ratio [
 	^ tally asFloat / self report totalTally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> report [
 	^ report
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> report: aSaReport [
 	report := aSaReport
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> tally [
 	^ tally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> tally: anInteger [
 	tally := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> time [
 	^ report totalTime * self ratio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> withAllChildren [
 	^ {self}, (children flatCollect: #withAllChildren)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaTallyNode >> withAllParents [
 
 	^ parent

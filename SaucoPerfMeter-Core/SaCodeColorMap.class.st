@@ -2,29 +2,31 @@
 I am initialized for a register and generate colors for each of its code nodes.
 "
 Class {
-	#name : #SaCodeColorMap,
-	#superclass : #SaColorMap,
+	#name : 'SaCodeColorMap',
+	#superclass : 'SaColorMap',
 	#instVars : [
 		'colorByCodeMap'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SaCodeColorMap class >> forReport: aSaReport [
 	^ self basicNew
 		initializeForReport: aSaReport;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeColorMap >> colorAt: aSaCodeNode [
 
 	^ colorByCodeMap at: aSaCodeNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SaCodeColorMap >> deepRegister: aCodeCollection colors: colors [
+
 	aCodeCollection ifEmpty: [ ^ self ].
 	colors
 		withIndexDo: [ :color :index | 
@@ -36,26 +38,37 @@ SaCodeColorMap >> deepRegister: aCodeCollection colors: colors [
 				colors: (self gradient: code children size from: color to: (color alpha: 0.5)) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SaCodeColorMap >> gradient: count from: base to: next [
-	^ (1 to: count) collect: [ :each | (base mixed: each / count with: next) alpha: 0.75 ]
+
+	^ (1 to: count) collect: [ :each |
+		  (base mixed: each / count with: next) alpha: 0.75 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeColorMap >> initialize [
 
 	super initialize.
-	colorByCodeMap := Dictionary new.
-
+	colorByCodeMap := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeColorMap >> initializeForReport: aReport [
-	| colors categories relevantCount irrelevantCount |
+
+	| colors categories relevantCount irrelevantCount relevantCategoryColors irrelevantCategoryColors |
 	self initialize.
 	categories := aReport allCategoryNodes.
+
 	relevantCount := categories count: [ :each | each isRelevant ].
 	irrelevantCount := categories size - relevantCount.
-	colors := (Color wheel: relevantCount), (Array new: irrelevantCount withAll: theme disabledTextColor).
+
+	relevantCategoryColors :=
+		(Color wheel: relevantCount)
+			collect: [ :each |
+				each mixed: 0.5 with: theme backgroundColor ].
+	irrelevantCategoryColors :=
+		Array new: irrelevantCount withAll: theme baseColor.
+	colors := relevantCategoryColors, irrelevantCategoryColors.
+
 	self deepRegister: categories colors: colors.
 ]

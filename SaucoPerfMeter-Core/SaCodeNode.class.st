@@ -2,81 +2,82 @@
 I represent a piece of code in the SaReport.
 "
 Class {
-	#name : #SaCodeNode,
-	#superclass : #Object,
+	#name : 'SaCodeNode',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'report',
 		'cachedNetTally',
 		'cachedTally'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> calculatedNetTally [
 
 	^ self children inject: 0 into: [ :sum :each | sum + each netTally ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> children [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> codeColor [
 
 	^ report colorMap colorAt: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> fullName [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SaCodeNode >> hasChildren [
 
 	^ self children notEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SaCodeNode >> isRelevant [
 
 	^ self netTallyRatio >= report minimumRelevantRatio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> netTally [
 	^ cachedNetTally ifNil: [ cachedNetTally := self calculatedNetTally ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> netTallyRatio [
 	"Answer the ratio of my #netTally respect to report's #totalTally."
 
 	^ self netTally asFloat / report totalTally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> netTime [
 
 	^ self report totalTime * self netTallyRatio
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SaCodeNode >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -86,12 +87,12 @@ SaCodeNode >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> report [
 	^ report
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaCodeNode >> report: anObject [
 	report := anObject
 ]

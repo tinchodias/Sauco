@@ -2,8 +2,8 @@
 I help to build instances of SaReport from instances of AndreasSystemProfiler or MessageTally.
 "
 Class {
-	#name : #SaBuilder,
-	#superclass : #Object,
+	#name : 'SaBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'behaviorNodesMapping',
 		'categoryNodesMapping',
@@ -13,10 +13,11 @@ Class {
 		'report',
 		'totalTally'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 SaBuilder >> build [
 	report
 		initializeNodes: rootTallyNodes
@@ -24,7 +25,7 @@ SaBuilder >> build [
 		totalTally: totalTally
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaBuilder >> initialize [
 	super initialize.
 	categoryNodesMapping := IdentityDictionary new.
@@ -33,7 +34,7 @@ SaBuilder >> initialize [
 	report := SaReport new
 ]
 
-{ #category : #'registering nodes' }
+{ #category : 'registering nodes' }
 SaBuilder >> registerAllCodeNodesFor: method [
 	"Ensures that code nodes at all levels are registered."
 
@@ -42,7 +43,7 @@ SaBuilder >> registerAllCodeNodesFor: method [
 	self registerMethodNodeFor: method
 ]
 
-{ #category : #'registering nodes' }
+{ #category : 'registering nodes' }
 SaBuilder >> registerBehaviorNodeFor: method [
 	| behavior |
 	behavior := method origin.
@@ -59,7 +60,7 @@ SaBuilder >> registerBehaviorNodeFor: method [
 			behaviorNode ]
 ]
 
-{ #category : #'registering nodes' }
+{ #category : 'registering nodes' }
 SaBuilder >> registerCategoryNodeFor: method [
 	| category |
 	category := method origin category.
@@ -71,7 +72,7 @@ SaBuilder >> registerCategoryNodeFor: method [
 				yourself ]
 ]
 
-{ #category : #'registering nodes' }
+{ #category : 'registering nodes' }
 SaBuilder >> registerMethodNodeFor: method [
 	methodNodesMapping
 		at: method
@@ -86,12 +87,12 @@ SaBuilder >> registerMethodNodeFor: method [
 			methodNode ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBuilder >> report [
 	^ report
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SaBuilder >> tallyNodeFor: aQSystemTally [
 	"Answers a new tally node for the argument. Important: It also registers code nodes."
 
@@ -117,7 +118,7 @@ SaBuilder >> tallyNodeFor: aQSystemTally [
 	^ tallyNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBuilder >> tallyRoot: tallyRoot [
 
 	totalTally := tallyRoot tally.
@@ -132,7 +133,7 @@ SaBuilder >> tallyRoot: tallyRoot [
 			nodeToDiscard children: #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBuilder >> totalTime: aNumber [
 	totalTime := aNumber
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #AndreasSystemProfiler }
+Extension { #name : 'AndreasSystemProfiler' }
 
-{ #category : #'*SaucoPerfMeter-Core' }
+{ #category : '*SaucoPerfMeter-Core' }
 AndreasSystemProfiler >> saucoAsReport [
 	^ SaBuilder new
 		tallyRoot: tallyRoot;

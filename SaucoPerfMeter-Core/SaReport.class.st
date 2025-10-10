@@ -2,8 +2,8 @@
 I represent a report of a profiling execution.
 "
 Class {
-	#name : #SaReport,
-	#superclass : #Object,
+	#name : 'SaReport',
+	#superclass : 'Object',
 	#instVars : [
 		'totalTime',
 		'totalTally',
@@ -11,10 +11,11 @@ Class {
 		'durationPrinter',
 		'colorMap'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleAll: aBlock [
 	| exampleSelector |
 	exampleSelector := thisContext sender selector storeString.
@@ -24,12 +25,12 @@ SaReport class >> exampleAll: aBlock [
 		inspect: (self newWithMTOn: aBlock) label: exampleSelector , ' - MessageTally'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleBenchFib [
 	self exampleAll: [ 32 benchFib ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleDiskWrite [
 	| baseName |
 	baseName := 'exampleDiskWrite'.
@@ -39,19 +40,19 @@ SaReport class >> exampleDiskWrite [
 	('.' asFileReference childrenMatching: baseName , '*') do: [ :each | each ensureDelete ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleFactorial [
 	self exampleAll: [ 1000 timesRepeat: [ 1000 factorial ] ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleFuelAllIcons [
 	self exampleAll: [ | array |
 		array := FLSerializer serializeToByteArray: Smalltalk ui icons. 
 		FLMaterializer materializeFromByteArray: array ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleRandomNext [
 	self
 		exampleAll: [ | random |
@@ -59,7 +60,7 @@ SaReport class >> exampleRandomNext [
 			(1 to: 500000) collect: [ :each | random next ] ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleReadFuelFiles [
 	"Inspect instances of SaReport stored in fuel files"
 
@@ -70,35 +71,35 @@ SaReport class >> exampleReadFuelFiles [
 				label: each basename ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleUUID [
 	self exampleAll: [ (1 to: 100000) collect: [ :each | UUID new ] ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleWait [
 	self exampleAll: [ 3 seconds wait ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleWorldFor5Seconds [
 	
 	(self newWithASPFor: 5 seconds) inspect
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SaReport class >> exampleZincGet [
 	self exampleAll: [ ZnEasy get: 'http://pharo.org/' ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 SaReport class >> newWithASPFor: aDuration [
 	"Profile the system during aDuration."
 
 	^ self newWithASPOn: [ aDuration wait ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 SaReport class >> newWithASPOn: aBlock [
 	| profiler semaphore saucoReport |
 	semaphore := Semaphore new.
@@ -114,14 +115,14 @@ SaReport class >> newWithASPOn: aBlock [
 	^ saucoReport
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 SaReport class >> newWithMTFor: aDuration [
 	"Profile the system during aDuration."
 
 	^ self newWithMTOn: [ aDuration wait ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 SaReport class >> newWithMTOn: aBlock [
 	| profiler |
 	profiler := MessageTally new.
@@ -131,78 +132,78 @@ SaReport class >> newWithMTOn: aBlock [
 		ensure: [ "Send of #close must be done at the end because it nilizes the instance variables" profiler close ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> allBehaviorNodes [
 	^ rootTallyNodes flatCollect: #allBehaviorNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> allCategoryNodes [
 	^ (rootTallyNodes flatCollect: #allCategoryNodes) sorted: [:a :b | a netTallyRatio > b netTallyRatio ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> allMethodNodes [
 	^ rootTallyNodes flatCollect: #allMethodNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> allTallyNodes [
 	^ rootTallyNodes flatCollect: #withAllChildren
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SaReport >> asFuelByteArray [
 	^ FLSerializer serializeToByteArray: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> colorMap [
 
 	^ colorMap ifNil: [ colorMap := SaCodeColorMap forReport: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> colorMap: aSaColorMap [
 
 	colorMap := aSaColorMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> durationPrinter [
 
 	^ durationPrinter ifNil: [ 
 		  durationPrinter := SaAdaptedDurationPrinter new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> durationPrinter: anObject [
 
 	durationPrinter := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaReport >> initializeNodes: aCollection totalTime: aDuration totalTally: anInteger [ 
 	rootTallyNodes := aCollection.
 	totalTime := aDuration.
 	totalTally := anInteger.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> methodNodeLeaves [
 
 	^ (self tallyLeaves collect: #methodNode) asSet 
 			sorted: [ :a :b | a netTally > b netTally ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SaReport >> minimumRelevantRatio [
 	"Answer the minimum ratio for either a tally or a code node to be considered relevant."
 
 	^ 0.03
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SaReport >> printOn: aStream [
 
 	super printOn: aStream.
@@ -213,22 +214,22 @@ SaReport >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> rootTallyNodes [
 	^ rootTallyNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> tallyLeaves [
 	^ rootTallyNodes flatCollect: #allLeaves
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> totalTally [
 	^ totalTally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaReport >> totalTime [
 	^ totalTime
 ]

@@ -2,57 +2,58 @@
 I represent a class or trait (instance or class side) in the SaReport.
 "
 Class {
-	#name : #SaBehaviorNode,
-	#superclass : #SaCodeNode,
+	#name : 'SaBehaviorNode',
+	#superclass : 'SaCodeNode',
 	#instVars : [
 		'categoryNode',
 		'methodNodes'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> addMethod: aMethodNode [
 	methodNodes add: aMethodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> categoryName [
 	^ categoryNode name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> categoryNode [
 	^ categoryNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> categoryNode: anObject [
 	categoryNode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> children [
 	^ methodNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> fullName [
 	^ name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaBehaviorNode >> initialize [
 	super initialize.
 	methodNodes := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> methodNodes [
 	^ methodNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaBehaviorNode >> methodNodes: anObject [
 	methodNodes := anObject
 ]
