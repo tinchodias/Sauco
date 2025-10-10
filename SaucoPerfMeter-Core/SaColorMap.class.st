@@ -1,38 +1,39 @@
 Class {
-	#name : #SaColorMap,
-	#superclass : #Object,
+	#name : 'SaColorMap',
+	#superclass : 'Object',
 	#instVars : [
 		'theme'
 	],
-	#category : #'SaucoPerfMeter-Core'
+	#category : 'SaucoPerfMeter-Core',
+	#package : 'SaucoPerfMeter-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaColorMap >> colorAt: aSaCodeNode [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SaColorMap >> initialize [
 
 	super initialize.
 	theme := Smalltalk ui theme.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaColorMap >> labelColorAt: aSaCodeNode [
 
 	^ self theme textColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaColorMap >> theme [
 
 	^ theme
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaColorMap >> theme: aUITheme [
 
 	theme := aUITheme

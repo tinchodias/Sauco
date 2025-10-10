@@ -1,6 +1,6 @@
-Extension { #name : #MessageTally }
+Extension { #name : 'MessageTally' }
 
-{ #category : #'*SaucoPerfMeter-Core' }
+{ #category : '*SaucoPerfMeter-Core' }
 MessageTally >> saucoAsReport [
 	^ SaBuilder new
 		tallyRoot: self;
