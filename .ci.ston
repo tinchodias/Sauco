@@ -1,8 +1,8 @@
 SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
-      #baseline : 'SaucoPerfMeter',
-      #directory : '',
+      #baseline : 'Sauco',
+      #directory : 'src',
       #platforms : [ #pharo ]
     }
   ],
