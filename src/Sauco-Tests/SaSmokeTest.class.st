@@ -15,7 +15,7 @@ SaSmokeTest >> assertValidReport: aSaReport [
 
 	aSaReport inspectionContexts do: [ :each |
 		self
-			shouldnt: [ each basicNewInspectionPresenter ]
+			shouldnt: [ each inspectionContexts ]
 			raise: Exception
 			description: 'Error inspecting: #', each methodSelector asString ]
 ]
