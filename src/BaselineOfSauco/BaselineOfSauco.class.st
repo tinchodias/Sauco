@@ -14,7 +14,7 @@ BaselineOfSauco >> baseline: spec [
 			package: 'Sauco-Core';
 			package: 'Sauco-Spec2'
 				with: [ spec requires: #( 'Sauco-Core' ) ];
-			package: 'Sauco-Roassal3'
+			package: 'Sauco-Roassal'
 				with: [ spec requires: #( 'Sauco-Spec2' ) ];
 			package: 'Sauco-Tests'
 				with: [ spec requires: #( 'Sauco-Core' ) ] ]
