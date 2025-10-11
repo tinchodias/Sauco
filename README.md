@@ -24,13 +24,11 @@ This project provides:
 
 ## Install
 
-In a Pharo 10 (Should work in 9.0, too)
-* First: Manually load full [Roassal3](https://github.com/ObjectProfile/Roassal3) via World Menu -> Library -> Roassal3 -> Load full version (This will load `Roassal3-FlameGraph` package, a dependency).
-* Second: Evaluate the following script: 
+Evaluate the following script in a Pharo image (>=v13):
 ~~~smalltalk
 Metacello new
-    baseline: 'SaucoPerfMeter';
-    repository: 'github://tinchodias/pharo-sauco-profiler';
+    baseline: 'Sauco';
+    repository: 'github://tinchodias/pharo-sauco-profiler:master/src';
     load.
 ~~~
 
