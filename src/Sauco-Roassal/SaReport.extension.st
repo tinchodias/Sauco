@@ -2,12 +2,24 @@ Extension { #name : 'SaReport' }
 
 { #category : '*Sauco-Roassal' }
 SaReport >> asFlameGraph [
+	"Answer a new Roassal canvas with a flame graph visualization to navigate this report (with a `RSCanvasController`)."
+
+	| canvas |
+	canvas := self asRSCanvas.
+
+	canvas addInteraction: RSCanvasController new.
+
+	^ canvas
+]
+
+{ #category : '*Sauco-Roassal' }
+SaReport >> asRSCanvas [
 
 	^ SaFlameGraph new
-	   report: self;
-	   tallyNodes: rootTallyNodes;
-	   build;
-	   canvas
+		  report: self;
+		  tallyNodes: rootTallyNodes;
+		  build;
+		  canvas
 ]
 
 { #category : '*Sauco-Roassal' }

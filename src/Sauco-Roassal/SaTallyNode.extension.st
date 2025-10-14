@@ -4,10 +4,18 @@ Extension { #name : 'SaTallyNode' }
 SaTallyNode >> inspectionForFlameGraph: aBuilder [
 	<inspectorPresentationOrder: 0.5 title: 'Children flame graph (no pruning)'>
 
-	^ (SaFlameGraph new
+	| canvas |
+	canvas :=
+		SaFlameGraph new
 		   considerAllNodes;
 		   report: report;
 		   tallyNodes: { self };
 		   build;
-		   canvas) asPresenter
+		   canvas.
+
+	canvas addInteraction: RSCanvasController new.
+
+	^ (aBuilder instantiate: SpRoassalInspectorPresenter)
+		canvas: canvas;
+		yourself
 ]

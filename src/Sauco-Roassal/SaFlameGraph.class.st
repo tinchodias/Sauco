@@ -10,9 +10,9 @@ Class {
 		'ellipsis',
 		'flameLabelKey',
 		'logicalFontSize',
-		'minimalLabelWidth',
 		'shrinkPace',
-		'minimalScaleToShowText'
+		'minimalScaleToShowText',
+		'popupInteraction'
 	],
 	#category : 'Sauco-Roassal',
 	#package : 'Sauco-Roassal'
@@ -31,7 +31,6 @@ SaFlameGraph >> build [
 
 	builder canvas
 		color: self theme backgroundColor;
-		addInteraction: RSCanvasController new;
 		when: RSScaleChangedEvent
 			send: #onCanvasScaled:
 			to: self.
@@ -46,8 +45,11 @@ SaFlameGraph >> build [
 	"Prepare the labels, that will be added depending on the camera scale"
 	flameBoxes do: [ :eachFlameBox |
 		| label |
-		label := RSLabel new.
-		label position: eachFlameBox position.
+		label := RSLabel new
+			model: eachFlameBox model;
+			position: eachFlameBox position;
+			addInteraction: popupInteraction;
+			yourself.
 		eachFlameBox propertyAt: flameLabelKey put: label ]
 ]
 
@@ -73,11 +75,10 @@ SaFlameGraph >> initialize [
 
 	flameLabelKey := #FlameLabel.
 
-	flameBoxPadding := 4 @ 10.
-	minimalLabelWidth := 10.
+	flameBoxPadding := 2 @ 10.
 
-	minimalScaleToShowText := 0.7.
-	logicalFontSize := 10.
+	minimalScaleToShowText := 0.5.
+	logicalFontSize := 7.
 
 	self considerOnlyRelevantNodes
 ]
@@ -101,6 +102,9 @@ SaFlameGraph >> prepareToBuild [
 		"Workaround: when gap's x is non-zero, the children narrow on each level."
 		gap: 0 @ 0.
 
+	"Share instance of the interaction"
+	popupInteraction := self popupInteraction.
+
 	builder boxShape
 		cornerRadius: 0;
 		border:
@@ -108,7 +112,7 @@ SaFlameGraph >> prepareToBuild [
 			  width: 0.5;
 			  color: self theme textColor;
 			  yourself);
-		addInteraction: self popupInteraction;
+		addInteraction: popupInteraction;
 		addInteraction: self highlightInteraction;
 		when: RSMouseDoubleClick
 			do: [ :each | each shape model inspect ]
@@ -179,7 +183,7 @@ SaFlameGraph >> updateLabelOf: aFlameBox scaledFontSize: scaledFontSize [
 		widthLimit: maxLabelWidth
 		onLabel: label.
 
-	"position: aFlameBox position --> to center".
+	"position: aFlameBox position --> to center"
 	RSLocation new
 		inner; middle; left;
 		offset: flameBoxPadding x @ 0;
