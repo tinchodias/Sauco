@@ -53,15 +53,18 @@ SaAdaptiveLabelsTest >> setUp [
 { #category : 'tests' }
 SaAdaptiveLabelsTest >> testBigEnoughToShowLabels [
 
-	canvas camera scale: 1.0.
-	canvas signalUpdate.
-	self assert: (canvas shapes anySatisfy: #isLabel)
+	canvas camera scale: 1.1.
+
+	self assert: (canvas shapes anySatisfy: #isLabel).
+	self
+		assert: (canvas shapes detect: #isLabel) fontSize
+		equals: StandardFonts defaultFont pointSize
 ]
 
 { #category : 'tests' }
 SaAdaptiveLabelsTest >> testTooSmallToShowLabels [
 
 	canvas camera scale: 0.25.
-	canvas signalUpdate.
+
 	self deny: (canvas shapes anySatisfy: #isLabel)
 ]

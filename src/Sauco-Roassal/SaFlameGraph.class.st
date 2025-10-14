@@ -35,22 +35,14 @@ SaFlameGraph >> build [
 			send: #onCanvasScaled:
 			to: self.
 
-	"Additional setup for the box shapes"
+	"Additional setup for the box shapes (the flame boxes)"
 	flameBoxes := builder shapes.
 	flameBoxes do: [ :eachFlameBox |
 		eachFlameBox
 			color: eachFlameBox model methodNode codeColor;
 			addInteraction: RSKeepBorderWidthRatioInteraction ].
 
-	"Prepare the labels, that will be added depending on the camera scale"
-	flameBoxes do: [ :eachFlameBox |
-		| label |
-		label := RSLabel new
-			model: eachFlameBox model;
-			position: eachFlameBox position;
-			addInteraction: popupInteraction;
-			yourself.
-		eachFlameBox propertyAt: flameLabelKey put: label ]
+	self prepareLabels
 ]
 
 { #category : 'accessing' }
@@ -75,10 +67,10 @@ SaFlameGraph >> initialize [
 
 	flameLabelKey := #FlameLabel.
 
-	flameBoxPadding := 2 @ 10.
+	flameBoxPadding := 4 @ 4.
 
-	minimalScaleToShowText := 0.5.
-	logicalFontSize := 7.
+	minimalScaleToShowText := 0.4.
+	logicalFontSize := StandardFonts defaultFont pointSize.
 
 	self considerOnlyRelevantNodes
 ]
@@ -89,6 +81,26 @@ SaFlameGraph >> onCanvasScaled: anEvent [
 	self updateLabels.
 
 	anEvent signalUpdate
+]
+
+{ #category : 'building' }
+SaFlameGraph >> prepareLabels [
+
+	"Prepare the labels, that will be added depending on the camera scale"
+	| highlightInteractionForLabels |
+	highlightInteractionForLabels := self highlightInteraction.
+	highlightInteractionForLabels highlightShapes: [ :label |
+		{ label propertyAt: flameLabelKey } ].
+	flameBoxes do: [ :eachFlameBox |
+		| label |
+		label := RSLabel new
+			model: eachFlameBox model;
+			position: eachFlameBox position;
+			addInteraction: popupInteraction;
+			addInteraction: highlightInteractionForLabels;
+			yourself.
+		eachFlameBox propertyAt: flameLabelKey put: label.
+		label propertyAt: flameLabelKey put: eachFlameBox ]
 ]
 
 { #category : 'private' }
@@ -203,7 +215,9 @@ SaFlameGraph >> updateLabels [
 	scale >= minimalScaleToShowText
 		ifTrue: [
 			| scaledFontSize |
-			scaledFontSize := (logicalFontSize / scale) ceiling.
+			scaledFontSize := scale < 1.0
+				ifTrue: [ logicalFontSize ]
+				ifFalse: [ (logicalFontSize / scale) ceiling ].
 
 			"Set label's fontSize and shrinked text
 			(label may need to be added to canvas, too)"
