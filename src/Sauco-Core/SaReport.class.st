@@ -17,12 +17,17 @@ Class {
 
 { #category : 'examples' }
 SaReport class >> exampleAll: aBlock [
+
 	| exampleSelector |
 	exampleSelector := thisContext sender selector storeString.
-	Smalltalk tools inspector
-		"inspect: (self newWithASP2On: aBlock) label: exampleSelector , ' - AndreasSystemProfiler2';"
-		inspect: (self newWithASPOn: aBlock) label: exampleSelector , ' - AndreasSystemProfiler';
-		inspect: (self newWithMTOn: aBlock) label: exampleSelector , ' - MessageTally'
+	
+	self
+		openInspectorOn: (self newWithASPOn: aBlock)
+		label: exampleSelector, ' - AndreasSystemProfiler'.
+
+	self
+		openInspectorOn: (self newWithMTOn: aBlock)
+		label: exampleSelector, ' - MessageTally'
 ]
 
 { #category : 'examples' }
@@ -64,11 +69,10 @@ SaReport class >> exampleRandomNext [
 SaReport class >> exampleReadFuelFiles [
 	"Inspect instances of SaReport stored in fuel files"
 
-	('.' asFileReference childrenMatching: 'profile_report.*.fuel')
-		do: [ :each | 
-			Smalltalk tools inspector
-				inspect: (FLMaterializer materializeFromFileNamed: each pathString)
-				label: each basename ]
+	('.' asFileReference childrenMatching: 'profile_report.*.fuel') do: [ :each | 
+		self
+			openInspectorOn: (FLMaterializer materializeFromFileNamed: each pathString)
+			label: each basename ]
 ]
 
 { #category : 'examples' }
@@ -89,6 +93,7 @@ SaReport class >> exampleWorldFor5Seconds [
 
 { #category : 'examples' }
 SaReport class >> exampleZincGet [
+
 	self exampleAll: [ ZnEasy get: 'http://pharo.org/' ]
 ]
 
@@ -130,6 +135,15 @@ SaReport class >> newWithMTOn: aBlock [
 	[ profiler spyEvery: 1 on: aBlock.
 	^ profiler saucoAsReport ]
 		ensure: [ "Send of #close must be done at the end because it nilizes the instance variables" profiler close ]
+]
+
+{ #category : 'private' }
+SaReport class >> openInspectorOn: anObject label: aString [
+	"This works on Pharo 13 and 14"
+
+	(Smalltalk tools toolNamed: #inspector)
+		inspect: anObject
+		label: aString
 ]
 
 { #category : 'accessing' }
