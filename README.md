@@ -32,6 +32,8 @@ Metacello new
     load.
 ~~~
 
+🚨 The baseline of this project was initially called `BaselineOfSaucoPerfMeter`, then simplified to `BaselineOfSauco`, but we keep backwards compatibility.
+
 ## How to Use
 
 You can find several examples oof use in class-side of `SaReport`, such as:
