@@ -33,6 +33,7 @@ Metacello new
 ~~~
 
 🚨 Note 1: The baseline of this project was initially called `BaselineOfSaucoPerfMeter`, then simplified to `BaselineOfSauco`, but we keep backwards compatibility.
+
 🚨 Note 2: This repository was renamed from `pharo-sauco-profiler` to `Sauco`.
 
 ## How to Use
@@ -50,12 +51,12 @@ SaReport newWithASPOn: [
 	FLMaterializer materializeFromByteArray: array ]
 ```
 
+## What does *sauco* mean?
+
+It has no relation with software profilers. Sauco is the name of [a tree](https://es.wikipedia.org/wiki/Sambucus_australis) that can look like in this picture:
+
+![Fruits](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Sambucus_nigra2.jpg/320px-Sambucus_nigra2.jpg)
+
 ## License
 
 The code is licensed under [MIT](LICENSE).
-
-## What is the *sauco* word? 
-
-Sauco is a name of [a tree](https://es.wikipedia.org/wiki/Sambucus_australis). One of the variants has fruits like these:
-
-![Fruits](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Sambucus_nigra2.jpg/320px-Sambucus_nigra2.jpg)
