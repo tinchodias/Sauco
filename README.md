@@ -1,13 +1,13 @@
-# Sauco Profiler
+# Sauco
 
 [![Test](https://github.com/tinchodias/pharo-sauco-profiler/actions/workflows/test.yml/badge.svg)](https://github.com/tinchodias/pharo-sauco-profiler/actions/workflows/test.yml)
 
-A tool to help in the comprehension of profilers' output, in Pharo. 
+Visual tools to help reading Pharo profiler tally output (`MessageTally` and `AndreasSystemProfiler`).
 
 This project provides:
-- A model to aggregate the tally information from the `MessageTally` and `AndreasSystemProfiler` (See `SaMethodNode`, `SaBehaviorNode` and `SaCategoryNode`).
+- A [flame graph](https://github.com/brendangregg/FlameGraph) visual inspector (a kind of non-radial [Sunburst](https://www.data-to-viz.com/graph/sunburst.html)).
+- A model to colorize and aggregate the tally output (See `SaMethodNode`, `SaBehaviorNode` and `SaCategoryNode`).
 - Spec2 inspectors provide means to explore the model.
-- Color mappings for the model and visualizations, such as a [flame graph](https://github.com/brendangregg/FlameGraph), which is a kind of non-radial [Sunburst](https://www.data-to-viz.com/graph/sunburst.html). The intention is easing comprehension of the tally nodes output. See captures below.
 
 ## Screenshots
 
@@ -28,11 +28,12 @@ Evaluate the following script in a Pharo image (>=v13):
 ~~~smalltalk
 Metacello new
     baseline: 'Sauco';
-    repository: 'github://tinchodias/pharo-sauco-profiler:master/src';
+    repository: 'github://tinchodias/Sauco:master/src';
     load.
 ~~~
 
-🚨 The baseline of this project was initially called `BaselineOfSaucoPerfMeter`, then simplified to `BaselineOfSauco`, but we keep backwards compatibility.
+🚨 Note 1: The baseline of this project was initially called `BaselineOfSaucoPerfMeter`, then simplified to `BaselineOfSauco`, but we keep backwards compatibility.
+🚨 Note 2: This repository was renamed from `pharo-sauco-profiler` to `Sauco`.
 
 ## How to Use
 
