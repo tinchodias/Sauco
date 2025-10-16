@@ -5,7 +5,6 @@ Class {
 		'tallyNodeSelectBlock',
 		'tallyNodes',
 		'flameBoxes',
-		'flameLabels',
 		'flameBoxPadding',
 		'ellipsis',
 		'flameLabelKey',
@@ -42,7 +41,8 @@ SaFlameGraph >> build [
 			color: eachFlameBox model methodNode codeColor;
 			addInteraction: RSKeepBorderWidthRatioInteraction ].
 
-	self prepareLabels
+	self prepareLabels.
+	self updateLabels
 ]
 
 { #category : 'accessing' }
