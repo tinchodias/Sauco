@@ -190,6 +190,11 @@ SaFlameGraph >> updateLabelOf: aFlameBox scaledFontSize: scaledFontSize [
 		fontSize: scaledFontSize.
 	
 	maxLabelWidth := aFlameBox width - (flameBoxPadding x * 2).
+	
+	"Ensure no label when space is too narrow"
+	maxLabelWidth < (flameBoxPadding x * 2) ifTrue: [
+		^ (aFlameBox propertyAt: flameLabelKey) remove ].
+
 	self
 		setText: aFlameBox model methodNode fullName
 		widthLimit: maxLabelWidth
