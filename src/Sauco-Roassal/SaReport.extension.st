@@ -24,7 +24,7 @@ SaReport >> asRSCanvas [
 
 { #category : '*Sauco-Roassal' }
 SaReport >> inspectionCodeSunburstIn: aBuilder [
-"	<inspectorPresentationOrder: 0.6 title: 'Tally Distribution'>"
+	<inspectorPresentationOrder: 0.6 title: 'Tally Distribution'>
 	
 	self flag: #todo. "Delete? wasn't useful"
 	

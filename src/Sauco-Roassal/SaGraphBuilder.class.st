@@ -27,7 +27,7 @@ SaGraphBuilder >> highlightInteraction [
 
 	^ RSHighlightable new
 		  highlightBorder: (RSBorder new
-				   width: 1;
+				   width: 2;
 				   color: self theme textColor);
 		  yourself
 ]

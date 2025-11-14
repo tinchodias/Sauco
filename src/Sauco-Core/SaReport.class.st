@@ -200,7 +200,7 @@ SaReport >> durationPrinter: anObject [
 SaReport >> initializeNodes: aCollection totalTime: aDuration totalTally: anInteger [ 
 	rootTallyNodes := aCollection.
 	totalTime := aDuration.
-	totalTally := anInteger.
+	totalTally := anInteger
 ]
 
 { #category : 'accessing' }
