@@ -21,7 +21,7 @@ SaColorMap >> colorAt: aSaCodeNode [
 SaColorMap >> initialize [
 
 	super initialize.
-	theme := Smalltalk ui theme.
+	theme := Smalltalk ui theme
 ]
 
 { #category : 'accessing' }

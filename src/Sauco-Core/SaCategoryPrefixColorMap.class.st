@@ -72,6 +72,5 @@ SaCategoryPrefixColorMap >> mapPrefixes: aCollectionOfStrings from: aColor to: a
 	colorAssociations := colorAssociations, 
 		(aCollectionOfStrings
 			collectWithIndex: [ :each :index |
-				each -> (colorRamp at: index) ]).
-
+				each -> (colorRamp at: index) ])
 ]
