@@ -106,18 +106,21 @@ SaReport class >> newWithASPFor: aDuration [
 
 { #category : 'convenience' }
 SaReport class >> newWithASPOn: aBlock [
-	| profiler semaphore saucoReport |
+
+	| profiler semaphore |
 	semaphore := Semaphore new.
 	profiler := AndreasSystemProfiler new.
-	[ "We fork just to cut stack trace: the ASP report will start at this method context"
-	profiler startProfiling.
-	aBlock value.
-	profiler stopProfiling.
-	saucoReport := profiler saucoAsReport.
-	semaphore signal ] fork.
+
+	"Fork to cut the stack trace: the report will start at this method context"
+	[	profiler startProfiling.
+		"We must take care of exception"
+		aBlock on: Exception do: [ :e |
+			profiler stopProfiling.
+			semaphore signal.
+			e pass ] ] fork.
 	semaphore wait.
-"	profiler doReport."
-	^ saucoReport
+
+	^ profiler saucoAsReport
 ]
 
 { #category : 'convenience' }
