@@ -117,7 +117,9 @@ SaReport class >> newWithASPOn: aBlock [
 		aBlock on: Exception do: [ :e |
 			profiler stopProfiling.
 			semaphore signal.
-			e pass ] ] fork.
+			e pass ].
+		profiler stopProfiling.
+		semaphore signal ] fork.
 	semaphore wait.
 
 	^ profiler saucoAsReport
