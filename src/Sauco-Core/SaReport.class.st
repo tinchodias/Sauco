@@ -134,12 +134,14 @@ SaReport class >> newWithMTFor: aDuration [
 
 { #category : 'convenience' }
 SaReport class >> newWithMTOn: aBlock [
+
 	| profiler |
 	profiler := MessageTally new.
 	profiler reportOtherProcesses: false.
-	[ profiler spyEvery: 1 on: aBlock.
-	^ profiler saucoAsReport ]
-		ensure: [ "Send of #close must be done at the end because it nilizes the instance variables" profiler close ]
+	[ profiler spyEvery: MessageTally defaultPollPeriod on: aBlock.
+	^ profiler saucoAsReport ] ensure: [
+		"Send of #close must be done at the end because it nilizes the instance variables"
+		profiler close ]
 ]
 
 { #category : 'private' }
